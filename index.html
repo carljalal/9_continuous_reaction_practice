@@ -1,23 +1,111 @@
 <html>
 <body>
 <script>
-
-instructions = document.createElement("div");
-query = document.createElement("textarea");
-indicator = document.createElement("div");
-
-document.body.append(instructions);
-document.body.append(query);
+// multiplication is an "and" deviation from 1
 
 
 
+// elements
+html_instructions = document.createElement("div");
+html_query = document.createElement("textarea");
+html_indicator = document.createElement("div");
+html_statistics = document.createElement("div");
+
+// append
+document.body.append(html_indicator);
+document.body.append(html_instructions);
+document.body.append(html_statistics);
+document.body.append(html_query);
+
+// initialize elements
+html_instructions.innerHTML = "press any button to start";
+html_instructions.style.fontFamily = "Verdana";
+html_statistics.innerHTML = "no statistics at this time!";
+html_query.rows = 2;
+html_query.cols = 100
+html_indicator.style.width = 300;
+html_indicator.style.height = 300;
+html_indicator.style.backgroundColor = "black";
 
 
 
 
+// initialize game state variables
+game_on = false;
+waiting = false;
+timeoutId = {};
+numberSuccess = 0;
+startTime = 0.0;
+elapsedTime = 0.0;
+lastTime = 0.0;
 
-keydownHandler = (event) => {
 
+// set indicator
+setColor = () => {
+
+}
+
+
+
+
+// switch color
+redWaiting = () => {
+    
+    waiting = true;
+    timeoutId = setTimeout(greenReady, Math.random()*Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 30000 + 10);
+    html_indicator.style.backgroundColor = "red";
+    
+}
+
+greenReady = () => {
+    waiting = false;
+    html_indicator.style.backgroundColor = "green";
+    
+}
+
+
+
+quitGame = () => {
+    clearTimeout(timeoutId);
+    game_on = false;
+    waiting = false;
+    html_instructions.innerHTML = "press any button to start";
+    numberSuccess = 0;
+    timeElapsed = 0.0;
+    lastTime = 0.0;
+}
+
+
+initializeGame = () => {
+    game_on = true;
+    startTime = performance.now();
+    html_instructions.innerHTML = "red light wait, green light click";
+    html_statistics.innerHTML = "no statistics yet";
+    redWaiting();
+}
+
+
+
+
+// handle input
+inputHandler = (event, eventType) => {
+    if(eventType == "click"){
+        if(game_on == false) {
+            initializeGame();
+        }
+        else {
+            if (waiting == false) {
+                redWaiting();
+            }
+        }
+    }
+
+    if(eventType == "keydown"){
+        // quit game
+        if(event.key = "q"){
+            quitGame();
+        }
+    }
 }
 
 
@@ -25,7 +113,9 @@ keydownHandler = (event) => {
 
 
 
-document.addEventListener("keydown",keydownHandler(event));
+// routing input
+document.addEventListener("keydown",inputHandler(event,"keydown"));
+document.addEventListener("click",inputHandler(event,"click"));
 
 
 </script>
