@@ -52,14 +52,14 @@ setColor = () => {
 redWaiting = () => {
     
     waiting = true;
-    timeoutId = setTimeout(greenReady, Math.random()*Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 30000 + 10);
+    timeoutId = setTimeout(greenReady, Math.random()*1000 + Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 30000 + 10);
     html_indicator.style.backgroundColor = "red";
     
 }
 
 greenReady = () => {
     waiting = false;
-    html_indicator.style.backgroundColor = "green";
+    html_indicator.style.backgroundColor = "lime";
     
 }
 
@@ -70,6 +70,7 @@ quitGame = () => {
     game_on = false;
     waiting = false;
     html_instructions.innerHTML = "press any button to start";
+    html_indicator.style.backgroundColor = "black";
     numberSuccess = 0;
     timeElapsed = 0.0;
     lastTime = 0.0;
@@ -88,24 +89,24 @@ initializeGame = () => {
 
 
 // handle input
-inputHandler = (event, eventType) => {
-    if(eventType == "click"){
+clickHandler = (event) => {
         if(game_on == false) {
             initializeGame();
         }
         else {
             if (waiting == false) {
+                timeElapsed = performance.now() - timeStart;
                 redWaiting();
             }
         }
     }
 
-    if(eventType == "keydown"){
+keyHandler = (event) => {    
         // quit game
         if(event.key = "q"){
             quitGame();
         }
-    }
+    
 }
 
 
@@ -114,8 +115,8 @@ inputHandler = (event, eventType) => {
 
 
 // routing input
-document.addEventListener("keydown",inputHandler(event,"keydown"));
-document.addEventListener("click",inputHandler(event,"click"));
+document.addEventListener("click",clickHandler);
+document.addEventListener("keydown",keyHandler);
 
 
 </script>
