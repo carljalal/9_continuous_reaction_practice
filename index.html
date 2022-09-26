@@ -10,13 +10,11 @@ html_instructions = document.createElement("div");
 html_query = document.createElement("textarea");
 html_indicator = document.createElement("div");
 html_statistics = document.createElement("div");
-
 // append
 document.body.append(html_indicator);
 document.body.append(html_instructions);
 document.body.append(html_statistics);
 document.body.append(html_query);
-
 // initialize elements
 html_instructions.innerHTML = "press any button to start";
 html_instructions.style.fontFamily = "Verdana";
@@ -37,13 +35,8 @@ timeoutId = {};
 numberSuccess = 0;
 startTime = 0.0;
 elapsedTime = 0.0;
-lastTime = 0.0;
+lastTimeBecameGreen = 0.0;
 
-
-// set indicator
-setColor = () => {
-
-}
 
 
 
@@ -56,15 +49,15 @@ redWaiting = () => {
     html_indicator.style.backgroundColor = "red";
     
 }
-
 greenReady = () => {
     waiting = false;
+    lastTimeGreen = performance.now();
     html_indicator.style.backgroundColor = "lime";
     
 }
 
 
-
+// game end
 quitGame = () => {
     clearTimeout(timeoutId);
     game_on = false;
@@ -73,10 +66,10 @@ quitGame = () => {
     html_indicator.style.backgroundColor = "black";
     numberSuccess = 0;
     timeElapsed = 0.0;
-    lastTime = 0.0;
+    lastTimeBecameGreen = 0.0;
 }
 
-
+// game start
 initializeGame = () => {
     game_on = true;
     startTime = performance.now();
@@ -96,6 +89,8 @@ clickHandler = (event) => {
         else {
             if (waiting == false) {
                 timeElapsed = performance.now() - timeStart;
+                currentReactionSpeed = performance.now() - lastTimeBecameGreen;
+                html_statistics.innerHTML = 
                 redWaiting();
             }
         }
@@ -117,6 +112,7 @@ keyHandler = (event) => {
 // routing input
 document.addEventListener("click",clickHandler);
 document.addEventListener("keydown",keyHandler);
+
 
 
 </script>
