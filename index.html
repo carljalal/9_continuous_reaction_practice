@@ -1,7 +1,12 @@
 <html>
 <body>
 <style>
-    
+body {
+    font-family: "Verdana";
+}
+.italic {
+    font-style: italic;
+}
 </style>
 <script>
 // multiplication is an "and" deviation from 1
@@ -19,10 +24,11 @@ document.body.append(html_instructions);
 document.body.append(html_statistics);
 //document.body.append(html_query);
 // initialize elements
-html_instructions.innerHTML = "click anywhere to start";
+html_instructions.innerHTML = "click/tap anywhere to start";
 html_instructions.style.fontSize = 30;
 html_instructions.style.fontWeight = 900;
 html_instructions.style.fontFamily = "Verdana";
+html_statistics.classList.add("italic");
 html_statistics.innerHTML = "";
 html_query.rows = 2;
 html_query.cols = 50;
@@ -80,7 +86,8 @@ quitGame = () => {
     game_on = false;
     waiting = false;
     html_instructions.innerHTML = "click/tap anywhere button to start";
-    html_indicator.style.backgroundColor = "black";
+    html_indicator.style.backgroundColor = "white";
+    html_statistics.innerHTML = "";
     numberSuccess = 0;
     timeElapsed = 0.0;
     lastTimeBecameGreen = 0.0;
