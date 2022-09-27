@@ -1,8 +1,8 @@
-# 9_continuous_reaction_practice
+# reaction speed app
 
 description: simple cognitive training
 
-purpose: to practice continuous reaction speed
+purpose: to practice nonstop reaction speed training
 
 technical:
 1) start/stop button
