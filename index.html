@@ -1,5 +1,8 @@
 <html>
 <body>
+<style>
+    
+</style>
 <script>
 // multiplication is an "and" deviation from 1
 
@@ -16,9 +19,11 @@ document.body.append(html_instructions);
 document.body.append(html_statistics);
 //document.body.append(html_query);
 // initialize elements
-html_instructions.innerHTML = "press any button to start";
+html_instructions.innerHTML = "click anywhere to start";
+html_instructions.style.fontSize = 30;
+html_instructions.style.fontWeight = 900;
 html_instructions.style.fontFamily = "Verdana";
-html_statistics.innerHTML = "no statistics at this time!";
+html_statistics.innerHTML = "";
 html_query.rows = 2;
 html_query.cols = 50;
 html_indicator = document.body;
@@ -87,7 +92,7 @@ quitGame = () => {
 initializeGame = () => {
     game_on = true;
     startTime = performance.now();
-    html_instructions.innerHTML = "red light wait, green light click/tap";
+    html_instructions.innerHTML = "on red wait, on green click/tap";
     html_statistics.innerHTML = "no statistics yet";
     redWaiting();
 }
@@ -138,7 +143,8 @@ keyHandler = (event) => {
 
 
 // routing input
-document.addEventListener("click",clickHandler);
+document.addEventListener("mousedown",clickHandler);
+document.addEventListener("touchdown",clickHandler);
 document.addEventListener("keydown",keyHandler);
 
 
