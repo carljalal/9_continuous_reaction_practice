@@ -40,14 +40,24 @@ reactionSpeedHistory = [];
 numErrors = 0;
 
 
+shortRandom = () => {
+    return Math.random()*300 ;
+}
 
+mediumRandom = () => {
+    return Math.random()*Math.random()*Math.random()*1000 ;
+}
+
+longRandom = () => {
+    return Math.random() *Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 60000;
+}
 
 
 // switch color
 redWaiting = () => {
     
     waiting = true;
-    timeoutId = setTimeout(greenReady, Math.random()*1000 + Math.random() * Math.random() * Math.random() * Math.random() * Math.random() * 30000 + 10);
+    timeoutId = setTimeout(greenReady, shortRandom + mediumRandom + longRandom);
     html_indicator.style.backgroundColor = "red";
     
 }
@@ -64,7 +74,7 @@ quitGame = () => {
     clearTimeout(timeoutId);
     game_on = false;
     waiting = false;
-    html_instructions.innerHTML = "press any button to start";
+    html_instructions.innerHTML = "click/tap anywhere button to start";
     html_indicator.style.backgroundColor = "black";
     numberSuccess = 0;
     timeElapsed = 0.0;
@@ -77,7 +87,7 @@ quitGame = () => {
 initializeGame = () => {
     game_on = true;
     startTime = performance.now();
-    html_instructions.innerHTML = "red light wait, green light click";
+    html_instructions.innerHTML = "red light wait, green light click/tap";
     html_statistics.innerHTML = "no statistics yet";
     redWaiting();
 }
@@ -101,10 +111,10 @@ clickHandler = (event) => {
                 timeElapsed = performance.now() - startTime;
                 currentReactionSpeed = performance.now() - lastTimeBecameGreen;
                 reactionSpeedHistory.push(currentReactionSpeed);
-                html_statistics.innerHTML = "last reaction speed: "+ currentReactionSpeed
-                html_statistics.innerHTML += "<br>number of tests: " + reactionSpeedHistory.length + " average reaction speed: " + getAverage(reactionSpeedHistory)/1000.0;
-                html_statistics.innerHTML += "<br>number of errors: " + numErrors;
-                html_statistics.innerHTML += "<br>session time: " + timeElapsed;
+                html_statistics.innerHTML = "last reaction speed: "+ currentReactionSpeed.toFixed() +"ms";
+                html_statistics.innerHTML += "<br>number of tests: " + reactionSpeedHistory.length + " average reaction speed: " + getAverage(reactionSpeedHistory).toFixed() + "ms";
+                html_statistics.innerHTML += "<br>number of errors: " + numErrors.toFixed();
+                html_statistics.innerHTML += "<br>session time: " + (timeElapsed/1000).toFixed() +"s";
                 redWaiting();
             }
             else if (waiting == true) {
