@@ -101,9 +101,10 @@ clickHandler = (event) => {
                 timeElapsed = performance.now() - startTime;
                 currentReactionSpeed = performance.now() - lastTimeBecameGreen;
                 reactionSpeedHistory.push(currentReactionSpeed);
-                html_statistics.innerHTML = "last: "+currentReactionSpeed
-                html_statistics.innerHTML += "<br>count: " + reactionSpeedHistory.length + " average: " + getAverage(reactionSpeedHistory)/1000.0;
-                html_statistics.innerHTML += "<br>errors: " + numErrors;
+                html_statistics.innerHTML = "last reaction speed: "+ currentReactionSpeed
+                html_statistics.innerHTML += "<br>number of tests: " + reactionSpeedHistory.length + " average reaction speed: " + getAverage(reactionSpeedHistory)/1000.0;
+                html_statistics.innerHTML += "<br>number of errors: " + numErrors;
+                html_statistics.innerHTML += "<br>session time: " + timeElapsed;
                 redWaiting();
             }
             else if (waiting == true) {
