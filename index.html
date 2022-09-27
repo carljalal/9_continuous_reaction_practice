@@ -9,7 +9,7 @@
 html_instructions = document.createElement("div");
 html_query = document.createElement("textarea");
 html_indicator = document.createElement("div");
-html_statistics = document.createElement("div");
+html_statistics = document.createElement("p");
 // append
 document.body.append(html_indicator);
 document.body.append(html_instructions);
@@ -36,6 +36,8 @@ numberSuccess = 0;
 startTime = 0.0;
 elapsedTime = 0.0;
 lastTimeBecameGreen = 0.0;
+reactionSpeedHistory = [];
+numErrors = 0;
 
 
 
@@ -51,7 +53,7 @@ redWaiting = () => {
 }
 greenReady = () => {
     waiting = false;
-    lastTimeGreen = performance.now();
+    lastTimeBecameGreen = performance.now();
     html_indicator.style.backgroundColor = "lime";
     
 }
@@ -67,6 +69,8 @@ quitGame = () => {
     numberSuccess = 0;
     timeElapsed = 0.0;
     lastTimeBecameGreen = 0.0;
+    reactionSpeedHistory = [];
+    numErrors = 0;
 }
 
 // game start
@@ -78,7 +82,13 @@ initializeGame = () => {
     redWaiting();
 }
 
-
+getAverage = (list) => {
+    sum = 0.0;
+    list.forEach((x) => {
+        sum += x;
+    })
+    return sum / list.length;
+}
 
 
 // handle input
@@ -88,10 +98,16 @@ clickHandler = (event) => {
         }
         else {
             if (waiting == false) {
-                timeElapsed = performance.now() - timeStart;
+                timeElapsed = performance.now() - startTime;
                 currentReactionSpeed = performance.now() - lastTimeBecameGreen;
-                html_statistics.innerHTML = 
+                reactionSpeedHistory.push(currentReactionSpeed);
+                html_statistics.innerHTML = "last: "+currentReactionSpeed
+                html_statistics.innerHTML += "<br>count: " + reactionSpeedHistory.length + " average: " + getAverage(reactionSpeedHistory)/1000.0;
+                html_statistics.innerHTML += "<br>errors: " + numErrors;
                 redWaiting();
+            }
+            else if (waiting == true) {
+                numErrors++;
             }
         }
     }
